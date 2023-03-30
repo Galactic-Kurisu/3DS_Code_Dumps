@@ -1,0 +1,36 @@
+To add a GUI to the bottom screen of your 3DS homebrew application, you will need to use the 3DS’s graphics library, which is included in the DevKitPro development environment. Here are the steps to follow:
+
+Create a new project: Create a new project for your 3DS homebrew application, as described in the previous response.
+
+Include the necessary libraries: In addition to the libctru library, you will also need to include the graphics library in your project. You can do this by adding the following line to your Makefile:
+
+LIBS := -lctru -lctru-gfx
+Initialize the graphics library: In your code, you will need to initialize the graphics library and set up the bottom screen for drawing. Here is an example code snippet:
+#include <3ds.h>
+#include <citro2d.h>
+
+int main() {
+    // Initialize the 3DS system
+    gfxInitDefault();
+
+    // Initialize the graphics library
+    C2D_Init(C2D_DEFAULT_MAX_OBJECTS);
+
+    // Set up the bottom screen for drawing
+    C2D_TextBuf bottomScreenText = C2D_TextBufNew(4096);
+    C2D_Text bottomScreen = C2D_TextNew(bottomScreenText);
+    C2D_TextParse(&bottomScreen, "Hello, world!");
+    C2D_TextOptimize(&bottomScreen);
+
+    // Initialize the LED
+    gpioInit();
+    gpioSetPullup(&GPIO_INPUT_PIN_PD0);
+    gpioSetDirection(&GPIO_INPUT_PIN_PD0, GPIO_DIRECTION_OUT);
+    gpioSetValue(&GPIO_INPUT_PIN_PD0, 1);
+
+    // Set the LED color to red
+    PTMU_LED color;
+    color.r = 255;
+    color.g = 0;
+    color.b = 0;
+    PTMU_SetLeds(&color);
