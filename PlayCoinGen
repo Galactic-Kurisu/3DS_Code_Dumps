@@ -1,0 +1,30 @@
+PLAY COIN GIVER CODE (COMPILE YOURSELF)
+
+#include <3ds.h>
+
+int main() {
+    // Initialize the 3DS system
+    gfxInitDefault();
+
+    // Initialize the play coin service
+    Result res = srvInit();
+    if (R_FAILED(res)) {
+        // Handle error
+    }
+
+    // Generate play coins
+    u32 playCoins = 100;
+    res = AM_AddStepCounter(playCoins);
+    if (R_FAILED(res)) {
+        // Handle error
+    }
+
+    // Main loop
+    while (aptMainLoop()) {
+        // Do nothing
+    }
+
+    // Exit
+    gfxExit();
+    return 0;
+}
