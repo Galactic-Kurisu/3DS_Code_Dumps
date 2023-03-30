@@ -1,4 +1,35 @@
-To add a GUI to the bottom screen of your 3DS homebrew application, you will need to use the 3DS’s graphics library, which is included in the DevKitPro development environment. Here are the steps to follow:
+**RED LED TUTORIAL!**
+#include <3ds.h>
+
+int main() {
+    // Initialize the 3DS system
+    gfxInitDefault();
+
+    // Initialize the LED
+    gpioInit();
+    gpioSetPullup(&GPIO_INPUT_PIN_PD0);
+    gpioSetDirection(&GPIO_INPUT_PIN_PD0, GPIO_DIRECTION_OUT);
+    gpioSetValue(&GPIO_INPUT_PIN_PD0, 1);
+
+    // Set the LED color to red
+    PTMU_LED color;
+    color.r = 255;
+    color.g = 0;
+    color.b = 0;
+    PTMU_SetLeds(&color);
+
+    // Main loop
+    while (aptMainLoop()) {
+        // Do nothing
+    }
+
+    // Exit
+    gfxExit();
+    return 0;
+}
+
+
+**To add a GUI to the bottom screen of your 3DS homebrew application, you will need to use the 3DS’s graphics library, which is included in the DevKitPro development environment. Here are the steps to follow:**
 
 Create a new project: Create a new project for your 3DS homebrew application, as described in the previous response.
 
